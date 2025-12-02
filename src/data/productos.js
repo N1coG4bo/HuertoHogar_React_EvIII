@@ -80,7 +80,7 @@ export const PRODUCTOS = [
     precio: 1200, 
     unidad: "unidad", 
     stock: 90, 
-    img: "/Leche-1L.jpg", 
+    img: "/leche-1l.jpg", 
     descripcion: "Leche fresca y entera, fuente de calcio y proteínas.", 
     origen: "Región de La Araucanía, Chile" 
   },
