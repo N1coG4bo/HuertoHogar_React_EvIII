@@ -3,7 +3,6 @@ import { PRODUCTOS } from '../data/productos';
 import ProductoCard from './producto_card';
 
 function ProductosDestacados() {
-  // Lógica interna del componente
   const destacados = PRODUCTOS.slice(0, 3);
 
   return (

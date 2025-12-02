@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
@@ -10,12 +11,12 @@ function Hero() {
             Productos locales, saludables y sustentables. Conecta con el origen de tus alimentos.
           </p>
           <div className="d-flex justify-content-center gap-2">
-            <a href="/productos" className="btn btn-warning btn-lg text-brown">
+            <Link to="/productos" className="btn btn-warning btn-lg text-brown">
               Explorar productos
-            </a>
-            <a href="/nosotros" className="btn btn-light btn-lg text-success">
-              Conócenos
-            </a>
+            </Link>
+            <Link to="/productos?view=destacados" className="btn btn-light btn-lg text-success">
+              Conocenos
+            </Link>
           </div>
         </div>
       </div>
