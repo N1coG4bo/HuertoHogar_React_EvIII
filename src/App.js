@@ -11,6 +11,7 @@ import Carrito from './pages/carrito';
 import AdminUsuarios from './pages/admin_usuarios';
 import AdminUsuarioDetalle from './pages/admin_usuario_detalle';
 import AdminDashboard from './pages/admin_dashboard';
+import Perfil from './pages/perfil';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/perfil" element={<Perfil />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/usuarios" element={<AdminUsuarios />} />
             <Route path="/admin/usuarios/:email" element={<AdminUsuarioDetalle />} />

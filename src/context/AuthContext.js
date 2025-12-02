@@ -50,6 +50,31 @@ export function AuthProvider({ children }) {
     setUser({ email, name, role: 'user' });
   }
 
+  function updateProfile(updates) {
+    if (!user) return;
+    setUsers((prev) =>
+      prev.map((u) => {
+        if (u.email !== user.email) return u;
+        const next = { ...u };
+        if (updates.name) next.name = updates.name;
+        if (typeof updates.about === 'string') next.about = updates.about;
+        if (typeof updates.phone === 'string') next.phone = updates.phone;
+        if (typeof updates.address === 'string') next.address = updates.address;
+        if (updates.password) next.password = updates.password;
+        return next;
+      })
+    );
+    setUser((prev) => ({
+      ...prev,
+      name: updates.name || prev?.name,
+      about: typeof updates.about === 'string' ? updates.about : prev?.about,
+      phone: typeof updates.phone === 'string' ? updates.phone : prev?.phone,
+      address: typeof updates.address === 'string' ? updates.address : prev?.address,
+      email: user.email,
+      role: user.role,
+    }));
+  }
+
   function logout() {
     setUser(null);
   }
@@ -61,6 +86,7 @@ export function AuthProvider({ children }) {
       users,
       login,
       register,
+      updateProfile,
       logout,
     }),
     [user, isAdmin, users]

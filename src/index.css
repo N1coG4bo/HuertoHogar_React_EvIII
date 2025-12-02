@@ -1,13 +1,46 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --hh-green: #1f7a38;
+  --hh-green-dark: #15572a;
+  --hh-cream: #f1f5eb;
+  --hh-text: #0f1a26;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #e6efe0 0%, #fdfdfb 55%, #ffffff 100%);
+  color: var(--hh-text);
+}
+
+a {
+  color: var(--hh-green);
+}
+
+a:hover {
+  color: var(--hh-green-dark);
+  text-decoration: none;
+}
+
+.navbar {
+  backdrop-filter: blur(6px);
+}
+
+.navbar-brand {
+  letter-spacing: 0.4px;
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 600;
 }

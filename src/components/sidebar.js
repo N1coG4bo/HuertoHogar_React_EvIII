@@ -19,13 +19,14 @@ function Sidebar() {
     if (location.pathname === '/blog') return 'blog';
     if (location.pathname.startsWith('/productos')) return 'catalogo';
     if (location.pathname.startsWith('/carrito')) return 'carrito';
+    if (location.pathname.startsWith('/perfil')) return 'perfil';
     if (location.pathname.startsWith('/admin/dashboard')) return 'admin-dashboard';
     if (location.pathname.startsWith('/admin/usuarios')) return 'admin';
     return '';
   }, [location.pathname]);
 
   return (
-    <aside className="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <aside className="app-sidebar shadow-sm" data-bs-theme="light">
       <div className="sidebar-brand">
         <Link to="/" className="brand-link d-flex align-items-center gap-2 text-decoration-none">
           <span
@@ -96,6 +97,13 @@ function Sidebar() {
                   Carrito
                   {totalItems > 0 && <span className="badge bg-success ms-2">{totalItems}</span>}
                 </p>
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/perfil" className={classNames('nav-link', page === 'perfil' && 'active')}>
+                <i className="nav-icon fas fa-user"></i>
+                <p>Mi perfil</p>
               </Link>
             </li>
 

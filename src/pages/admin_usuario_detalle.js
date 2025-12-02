@@ -14,7 +14,7 @@ function getInitials(name = '') {
 function AdminUsuarioDetalle() {
   const { email } = useParams();
   const navigate = useNavigate();
-  const { users, isAdmin } = React.useContext(AuthContext);
+  const { users, isAdmin, user: currentUser } = React.useContext(AuthContext);
 
   const user = users.find((u) => u.email === email);
 
@@ -63,7 +63,12 @@ function AdminUsuarioDetalle() {
                 </Link>
                 <h1 className="h4 text-success fw-bold mb-0">Perfil de usuario</h1>
               </div>
-              <span className="badge bg-light text-secondary text-uppercase">{user.role}</span>
+              <div className="d-flex align-items-center gap-2">
+                {currentUser?.email === user.email && (
+                  <Link to="/perfil" className="btn btn-outline-primary btn-sm">Editar mi perfil</Link>
+                )}
+                <span className="badge bg-light text-secondary text-uppercase">{user.role}</span>
+              </div>
             </div>
 
             <div className="row g-4">

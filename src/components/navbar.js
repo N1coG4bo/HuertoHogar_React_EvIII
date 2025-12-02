@@ -62,7 +62,7 @@ function Navbar() {
             {user ? (
               <>
                 <li className="nav-item me-2">
-                  <span className="nav-link text-success">Hola, {user.name}</span>
+                  <NavLink className="nav-link" to="/perfil">Hola, {user.name}</NavLink>
                 </li>
                 <li className="nav-item me-2">
                   <button className="btn btn-outline-secondary btn-sm" onClick={handleLogout}>Salir</button>
