@@ -1,3 +1,4 @@
+// Resumen y gestión del carrito de compras.
 import React from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -9,7 +10,7 @@ function Carrito() {
   return (
     <>
       <Navbar />
-      <div className="container my-5">
+      <div className="container my-5 main-content">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h1 className="h4 text-success fw-bold mb-0">Carrito</h1>
           {items.length > 0 && (

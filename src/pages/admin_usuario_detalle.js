@@ -1,3 +1,4 @@
+// Perfil detallado de un usuario dentro del panel admin.
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
@@ -50,7 +51,7 @@ function AdminUsuarioDetalle() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid main-content">
         <div className="row">
           <div className="col-12 col-lg-3 col-xl-2 mb-4">
             <Sidebar />

@@ -1,3 +1,4 @@
+// Contexto para autenticación y gestión básica de usuarios.
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 
 const USERS_KEY = 'hh_users';

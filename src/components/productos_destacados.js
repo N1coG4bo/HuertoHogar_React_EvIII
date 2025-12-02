@@ -1,3 +1,4 @@
+// Muestra un subset de productos destacados en el home.
 import React from 'react';
 import { PRODUCTOS } from '../data/productos';
 import ProductoCard from './producto_card';

@@ -1,3 +1,4 @@
+// Página de inicio con hero y destacados.
 import React from 'react';
 import Navbar from '../components/navbar';
 import Hero from '../components/hero';
@@ -6,7 +7,7 @@ import Footer from '../components/footer';
 
 function Inicio() {
   return (
-    <div>
+    <div className="main-content">
       <Navbar />
       <Hero />
       <ProductosDestacados />

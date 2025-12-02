@@ -1,3 +1,4 @@
+// Cabecera reutilizable para páginas internas.
 import React from 'react';
 
 function PageHeader({ titulo, bajada }) {

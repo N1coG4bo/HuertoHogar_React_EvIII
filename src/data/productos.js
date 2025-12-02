@@ -1,4 +1,4 @@
-// Datos de productos HuertoHogar (texto en ASCII para evitar problemas de codificacion)
+// Datos estáticos de productos HuertoHogar (texto en ASCII para evitar problemas de codificacion).
 
 export const PRODUCTOS = [
   // Frutas Frescas (FR)

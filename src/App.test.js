@@ -1,3 +1,4 @@
+// Test básico que valida que el hero se renderiza.
 import { render, screen } from '@testing-library/react';
 import App from './App';
 

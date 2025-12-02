@@ -1,3 +1,4 @@
+// Contenido del detalle de producto con recomendados.
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { PRODUCTOS } from '../data/productos';
@@ -33,7 +34,13 @@ function DetalleContenido() {
       <div className="row g-4 align-items-start">
         <div className="col-12 col-lg-6">
           <div className="ratio ratio-4x3 bg-white border rounded overflow-hidden">
-            <img src={producto.img} alt={producto.nombre} className="w-100 h-100" style={{ objectFit: 'cover' }} />
+            <img
+              src={producto.img}
+              alt={producto.nombre}
+              className="w-100 h-100"
+              style={{ objectFit: 'cover' }}
+              onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
+            />
           </div>
         </div>
         <div className="col-12 col-lg-6">

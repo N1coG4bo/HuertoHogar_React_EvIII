@@ -1,3 +1,4 @@
+// Dashboard admin con gráficos básicos de la tienda.
 import React, { useMemo } from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -171,7 +172,7 @@ function AdminDashboard() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid main-content">
         <div className="row">
           <div className="col-12 col-lg-3 col-xl-2 mb-4">
             <Sidebar />

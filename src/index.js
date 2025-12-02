@@ -1,3 +1,4 @@
+// Punto de arranque de React, monta el árbol de la app.
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';

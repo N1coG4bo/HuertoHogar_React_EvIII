@@ -1,3 +1,4 @@
+// Tarjeta individual de producto en listados.
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
@@ -22,6 +23,7 @@ function ProductoCard({ producto }) {
           className="card-img-top"
           alt={producto.nombre}
           loading="lazy"
+          onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
           style={{ height: '200px', objectFit: 'cover' }}
         />
 

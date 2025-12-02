@@ -1,3 +1,4 @@
+// Listado filtrable y ordenable de productos.
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PRODUCTOS } from '../data/productos';

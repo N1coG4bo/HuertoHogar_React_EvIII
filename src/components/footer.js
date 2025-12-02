@@ -1,3 +1,4 @@
+// Pie de página con derechos reservados.
 import React from 'react';
 
 function Footer() {

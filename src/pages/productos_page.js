@@ -1,3 +1,4 @@
+// Vista de catálogo con filtros y sidebar.
 import React from 'react';
 import Navbar from '../components/navbar';
 import PageHeader from '../components/page_header';
@@ -9,7 +10,7 @@ function ProductosPage() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid main-content">
         <div className="row">
           <div className="col-12 col-lg-3 col-xl-2 mb-4">
             <Sidebar />

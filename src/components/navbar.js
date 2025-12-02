@@ -1,3 +1,4 @@
+// Navbar principal: enlaces públicos, accesos de admin, sesión de usuario y estado del carrito.
 import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';

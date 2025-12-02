@@ -1,3 +1,4 @@
+// Sección hero de la página de inicio.
 import React from 'react';
 import { Link } from 'react-router-dom';
 

@@ -20,6 +20,10 @@ body {
   color: var(--hh-text);
 }
 
+.main-content {
+  margin-top: 1rem;
+}
+
 a {
   color: var(--hh-green);
 }
@@ -43,4 +47,11 @@ a:hover {
 
 .form-label {
   font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.container,
+.container-fluid {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }

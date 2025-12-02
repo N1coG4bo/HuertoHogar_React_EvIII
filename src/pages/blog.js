@@ -1,3 +1,4 @@
+// Listado simple de posts del blog.
 import React from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -12,7 +13,7 @@ function Blog() {
   return (
     <>
       <Navbar />
-      <div className="container my-5">
+      <div className="container my-5 main-content">
         <h1 className="h3 text-success fw-bold mb-4">Blog HuertoHogar</h1>
         <div className="row g-4">
           {POSTS.map((post) => (

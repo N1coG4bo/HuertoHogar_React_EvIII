@@ -1,3 +1,4 @@
+// Menú lateral con accesos directos a las secciones.
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';

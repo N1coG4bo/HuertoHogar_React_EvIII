@@ -1,3 +1,4 @@
+// Listado de usuarios para el panel de administración.
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar';
@@ -25,7 +26,7 @@ function AdminUsuarios() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid main-content">
         <div className="row">
           <div className="col-12 col-lg-3 col-xl-2 mb-4">
             <Sidebar />

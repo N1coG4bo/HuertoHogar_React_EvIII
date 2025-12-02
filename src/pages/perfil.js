@@ -1,3 +1,4 @@
+// Página para ver y editar el perfil del usuario actual.
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
@@ -80,7 +81,7 @@ function Perfil() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid main-content">
         <div className="row">
           <div className="col-12 col-lg-3 col-xl-2 mb-4">
             <Sidebar />

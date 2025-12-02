@@ -1,3 +1,4 @@
+// Formulario de inicio de sesión para usuarios registrados.
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/navbar';
@@ -24,7 +25,7 @@ function Login() {
   return (
     <>
       <Navbar />
-      <div className="container my-5" style={{ maxWidth: 480 }}>
+      <div className="container my-5 main-content" style={{ maxWidth: 480 }}>
         <h1 className="h3 text-success fw-bold mb-3">Iniciar sesion</h1>
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit} className="card p-4 shadow-sm">

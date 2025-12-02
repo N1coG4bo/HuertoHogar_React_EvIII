@@ -1,3 +1,4 @@
+// Contexto para el estado del carrito y sus operaciones.
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 
 const CART_KEY = 'hh_cart';
