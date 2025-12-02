@@ -9,9 +9,6 @@ import ProductoDetalle from './pages/producto_detalle';
 function App() {
   return (
     <Router>
-      {/* El Navbar va FUERA de Routes para que se vea en todas las páginas */}
-      <Navbar />
-
       <Routes>
         {/* Página de Inicio */}
         <Route path='/' element={<Inicio />} />
