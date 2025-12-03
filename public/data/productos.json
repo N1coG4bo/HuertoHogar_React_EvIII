@@ -1,0 +1,82 @@
+[
+  {
+    "code": "FR001",
+    "nombre": "Manzanas Fuji",
+    "precio": 1200,
+    "unidad": "kg",
+    "stock": 150,
+    "img": "/manzana.jpeg",
+    "descripcion": "Manzanas frescas, dulces y crujientes, ideales para postres y snacks.",
+    "origen": "Region del Maule, Chile"
+  },
+  {
+    "code": "FR002",
+    "nombre": "Naranjas Valencia",
+    "precio": 1000,
+    "unidad": "kg",
+    "stock": 200,
+    "img": "/naranja.jpeg",
+    "descripcion": "Naranjas jugosas y llenas de vitamina C, perfectas para jugos.",
+    "origen": "Region de Coquimbo, Chile"
+  },
+  {
+    "code": "FR003",
+    "nombre": "Platanos Cavendish",
+    "precio": 800,
+    "unidad": "kg",
+    "stock": 250,
+    "img": "/platanos-cavendish.jpg",
+    "descripcion": "Platanos suaves y energeticos, fuente natural de potasio.",
+    "origen": "Region de Los Rios, Chile"
+  },
+  {
+    "code": "VR001",
+    "nombre": "Zanahorias Organicas",
+    "precio": 900,
+    "unidad": "kg",
+    "stock": 100,
+    "img": "/zanahoria.jpg",
+    "descripcion": "Zanahorias cultivadas sin pesticidas, ideales para ensaladas y jugos.",
+    "origen": "Region Metropolitana, Chile"
+  },
+  {
+    "code": "VR002",
+    "nombre": "Espinacas Frescas",
+    "precio": 700,
+    "unidad": "500 g",
+    "stock": 80,
+    "img": "/espinacas.jpg",
+    "descripcion": "Espinacas verdes y tiernas, ricas en hierro y vitaminas.",
+    "origen": "Region de O'Higgins, Chile"
+  },
+  {
+    "code": "VR003",
+    "nombre": "Pimientos Tricolores",
+    "precio": 1500,
+    "unidad": "kg",
+    "stock": 120,
+    "img": "/pimientos-tricolores.jpeg",
+    "descripcion": "Pimientos rojos, verdes y amarillos, perfectos para salteados y ensaladas.",
+    "origen": "Region del Biobio, Chile"
+  },
+  {
+    "code": "PO001",
+    "nombre": "Miel Organica 500g",
+    "precio": 5000,
+    "unidad": "frasco",
+    "stock": 50,
+    "img": "/miel.jpg",
+    "descripcion": "Miel pura y natural, recolectada de abejas libres de quimicos.",
+    "origen": "Region de Los Lagos, Chile"
+  },
+  {
+    "code": "PL001",
+    "nombre": "Leche Entera 1L",
+    "precio": 1200,
+    "unidad": "unidad",
+    "stock": 90,
+    "img": "/leche-1l.jpg",
+    "descripcion": "Leche fresca y entera, fuente de calcio y proteinas.",
+    "origen": "Region de La Araucania, Chile"
+  }
+]

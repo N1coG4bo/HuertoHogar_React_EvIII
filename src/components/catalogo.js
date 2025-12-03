@@ -1,8 +1,8 @@
 // Listado filtrable y ordenable de productos.
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PRODUCTOS } from '../data/productos';
 import ProductoCard from './producto_card';
+import { ProductsContext } from '../context/ProductsContext';
 
 const CATEGORIAS = {
   frutas: { label: 'Frutas Frescas', prefix: 'FR' },
@@ -17,6 +17,7 @@ function Catalogo() {
   const [orden, setOrden] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const { products, loading, error } = React.useContext(ProductsContext);
 
   // Leer query params para sincronizar categoria/vista con el sidebar
   useEffect(() => {
@@ -33,11 +34,11 @@ function Catalogo() {
     const params = new URLSearchParams(location.search);
     const view = params.get('view');
 
-    let base = PRODUCTOS;
+    let base = products;
     if (view === 'destacados') {
-      base = PRODUCTOS.slice(0, 3);
+      base = products.slice(0, 3);
     } else if (view === 'ofertas') {
-      base = PRODUCTOS.filter((p) => p.precio <= 1000);
+      base = products.filter((p) => p.precio <= 1000);
     }
 
     const termino = busqueda.toLowerCase();
@@ -62,7 +63,7 @@ function Catalogo() {
       if (orden === 'nombre_desc') return b.nombre.localeCompare(a.nombre);
       return 0;
     });
-  }, [busqueda, categoria, orden, location.search]);
+  }, [busqueda, categoria, orden, location.search, products]);
 
   const handleCategoria = (value) => {
     setCategoria(value);
@@ -75,6 +76,22 @@ function Catalogo() {
     }
     navigate({ pathname: '/productos', search: params.toString() ? `?${params}` : '' });
   };
+
+  if (loading) {
+    return (
+      <div className="container my-4">
+        <div className="alert alert-info">Cargando productos...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container my-4">
+        <div className="alert alert-danger">No pudimos cargar los productos: {error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="container my-4">

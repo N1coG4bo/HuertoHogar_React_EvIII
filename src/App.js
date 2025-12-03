@@ -15,26 +15,29 @@ import AdminDashboard from './pages/admin_dashboard';
 import Perfil from './pages/perfil';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ProductsProvider } from './context/ProductsContext';
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/productos" element={<ProductosPage />} />
-            <Route path="/producto/:code" element={<ProductoDetalle />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/carrito" element={<Carrito />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/usuarios" element={<AdminUsuarios />} />
-            <Route path="/admin/usuarios/:email" element={<AdminUsuarioDetalle />} />
-          </Routes>
-        </Router>
+        <ProductsProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Inicio />} />
+              <Route path="/productos" element={<ProductosPage />} />
+              <Route path="/producto/:code" element={<ProductoDetalle />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registro" element={<Registro />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/carrito" element={<Carrito />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+              <Route path="/admin/usuarios/:email" element={<AdminUsuarioDetalle />} />
+            </Routes>
+          </Router>
+        </ProductsProvider>
       </CartProvider>
     </AuthProvider>
   );

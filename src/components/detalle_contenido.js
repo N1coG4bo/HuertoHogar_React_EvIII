@@ -1,26 +1,48 @@
 // Contenido del detalle de producto con recomendados.
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { PRODUCTOS } from '../data/productos';
 import ProductoCard from './producto_card';
 import { CartContext } from '../context/CartContext';
+import { ProductsContext } from '../context/ProductsContext';
 
 function DetalleContenido() {
   const { code } = useParams();
   const { addToCart } = React.useContext(CartContext);
-  const [producto, setProducto] = useState(null);
-  const [cantidad, setCantidad] = useState(1);
+  const { products, loading, error } = React.useContext(ProductsContext);
+  const [cantidad, setCantidad] = React.useState(1);
 
-  useEffect(() => {
-    const encontrado = PRODUCTOS.find((p) => p.code === code);
-    setProducto(encontrado);
-  }, [code]);
+  const producto = React.useMemo(
+    () => products.find((p) => p.code === code),
+    [products, code]
+  );
 
-  if (!producto) return <div className="container my-5">Cargando producto...</div>;
+  const relacionados = React.useMemo(() => {
+    if (!producto) return [];
+    const prefijo = producto.code.substring(0, 2);
+    return products.filter((p) => p.code.startsWith(prefijo) && p.code !== producto.code).slice(0, 3);
+  }, [producto, products]);
+
+  if (loading) {
+    return <div className="container my-5">Cargando producto...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="container my-5">
+        <div className="alert alert-danger">No pudimos cargar el producto: {error}</div>
+      </div>
+    );
+  }
+
+  if (!producto) {
+    return (
+      <div className="container my-5">
+        <div className="alert alert-warning">Producto no encontrado.</div>
+      </div>
+    );
+  }
 
   const sinStock = producto.stock <= 0;
-  const prefijo = producto.code.substring(0, 2);
-  const relacionados = PRODUCTOS.filter((p) => p.code.startsWith(prefijo) && p.code !== producto.code).slice(0, 3);
 
   function formatPrecio(precio) {
     return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(precio);
