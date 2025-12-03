@@ -14,12 +14,14 @@ const DEFAULT_ADMIN = {
 };
 
 export function AuthProvider({ children }) {
+  // Usuarios persistidos en localStorage (semilla incluye admin).
   const [users, setUsers] = useState(() => {
     const saved = localStorage.getItem(USERS_KEY);
     if (saved) return JSON.parse(saved);
     return [DEFAULT_ADMIN];
   });
 
+  // Sesion actual guardada en localStorage.
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem(SESSION_KEY);
     return saved ? JSON.parse(saved) : null;
@@ -36,12 +38,14 @@ export function AuthProvider({ children }) {
 
   const isAdmin = user?.role === 'admin';
 
+  // Inicia sesion validando credenciales.
   function login(email, password) {
     const found = users.find((u) => u.email === email && u.password === password);
     if (!found) throw new Error('Credenciales invalidas');
     setUser({ email: found.email, name: found.name, role: found.role });
   }
 
+  // Registra un nuevo usuario basico.
   function register({ email, password, name }) {
     if (users.some((u) => u.email === email)) {
       throw new Error('El correo ya esta registrado');
@@ -51,6 +55,7 @@ export function AuthProvider({ children }) {
     setUser({ email, name, role: 'user' });
   }
 
+  // Actualiza datos del usuario en lista y en sesion.
   function updateProfile(updates) {
     if (!user) return;
     setUsers((prev) =>
@@ -76,6 +81,7 @@ export function AuthProvider({ children }) {
     }));
   }
 
+  // Cierra sesion.
   function logout() {
     setUser(null);
   }

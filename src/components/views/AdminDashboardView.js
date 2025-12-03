@@ -5,6 +5,7 @@ import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 import { ProductsContext } from '../../context/ProductsContext';
 
+// Tarjeta basica para envolver cada grafico con header de color.
 function Card({ title, children, colorClass = 'bg-primary', legend }) {
   return (
     <div className="card shadow-sm h-100">
@@ -17,6 +18,7 @@ function Card({ title, children, colorClass = 'bg-primary', legend }) {
   );
 }
 
+// Genera el path "M/L" para lineas escaladas dentro de un SVG.
 function buildPath(data, key, width, height, maxValue) {
   if (!data.length) return '';
   const step = width / Math.max(1, data.length - 1);
@@ -119,6 +121,7 @@ function AdminDashboardView() {
   const { isAdmin } = React.useContext(AuthContext);
   const { products, loading: productsLoading, error: productsError, refresh } = React.useContext(ProductsContext);
 
+  // Datos mock para graficos de tendencias y barras.
   const areaData = [
     { mes: 'Ene', ventas: 120, ingresos: 220 },
     { mes: 'Feb', ventas: 150, ingresos: 240 },
@@ -149,6 +152,7 @@ function AdminDashboardView() {
     { mes: 'Jul', electronica: 92, digitales: 40 },
   ];
 
+  // Deriva distribucion de productos por prefijo (categoria) desde el catalogo real.
   const donutData = useMemo(() => {
     if (!products.length) return [];
     const totals = products.reduce(

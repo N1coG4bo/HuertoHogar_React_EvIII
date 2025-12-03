@@ -6,16 +6,19 @@ import { CartContext } from '../context/CartContext';
 import { ProductsContext } from '../context/ProductsContext';
 
 function DetalleContenido() {
+  // Datos base: codigo en URL, acciones del carrito y productos en memoria.
   const { code } = useParams();
   const { addToCart } = React.useContext(CartContext);
   const { products, loading, error } = React.useContext(ProductsContext);
   const [cantidad, setCantidad] = React.useState(1);
 
+  // Busca el producto activo segun el codigo de la ruta.
   const producto = React.useMemo(
     () => products.find((p) => p.code === code),
     [products, code]
   );
 
+  // Sugiere hasta 3 productos que compartan prefijo de codigo (misma categoria).
   const relacionados = React.useMemo(() => {
     if (!producto) return [];
     const prefijo = producto.code.substring(0, 2);
@@ -44,10 +47,12 @@ function DetalleContenido() {
 
   const sinStock = producto.stock <= 0;
 
+  // Formatea el precio a CLP sin decimales.
   function formatPrecio(precio) {
     return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(precio);
   }
 
+  // Ajustes seguros de cantidad dentro del rango [1, stock].
   const decrementar = () => setCantidad((prev) => Math.max(1, prev - 1));
   const incrementar = () => setCantidad((prev) => Math.min(producto.stock, prev + 1));
 

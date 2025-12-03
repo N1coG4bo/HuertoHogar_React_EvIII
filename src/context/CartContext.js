@@ -6,6 +6,7 @@ const CART_KEY = 'hh_cart';
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  // Items persistidos del carrito en localStorage.
   const [items, setItems] = useState(() => {
     const saved = localStorage.getItem(CART_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -27,6 +28,7 @@ export function CartProvider({ children }) {
     });
   }
 
+  // Ajusta cantidad (min 1) y elimina si queda en 0.
   function updateQty(code, qty) {
     setItems((prev) =>
       prev
@@ -35,10 +37,12 @@ export function CartProvider({ children }) {
     );
   }
 
+  // Saca un item puntual del carrito.
   function removeItem(code) {
     setItems((prev) => prev.filter((it) => it.code !== code));
   }
 
+  // Vaciar carrito por completo.
   function clearCart() {
     setItems([]);
   }

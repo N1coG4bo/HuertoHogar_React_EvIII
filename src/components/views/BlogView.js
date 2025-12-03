@@ -3,6 +3,7 @@ import React from 'react';
 import MainLayout from '../main_layout';
 import Footer from '../footer';
 
+// Posts estaticos de ejemplo para el blog.
 const POSTS = [
   { id: 1, title: '5 recetas rapidas con verduras organicas', excerpt: 'Ideas para cenar en 20 minutos usando productos frescos.', date: '2025-12-01' },
   { id: 2, title: 'Como elegir frutas de estacion', excerpt: 'Tips para identificar frutas en su punto y aprovechar precios.', date: '2025-11-21' },

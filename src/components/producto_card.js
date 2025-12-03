@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 
 function ProductoCard({ producto }) {
+  // Deriva flags/acciones: sin stock y acceso al carrito global.
   const sinStock = producto.stock <= 0;
   const { addToCart } = React.useContext(CartContext);
 
+  // Formatea precios en CLP sin decimales.
   function formatPrecio(precio) {
     return new Intl.NumberFormat('es-CL', {
       style: 'currency',

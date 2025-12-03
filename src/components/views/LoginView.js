@@ -6,12 +6,14 @@ import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 
 function LoginView() {
+  // Estado local y acceso al metodo de login desde el contexto.
   const { login } = React.useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Intenta autenticar y redirigir al catalogo; muestra error si falla.
   const handleSubmit = (e) => {
     e.preventDefault();
     try {

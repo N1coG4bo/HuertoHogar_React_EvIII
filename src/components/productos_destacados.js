@@ -5,6 +5,7 @@ import { ProductsContext } from '../context/ProductsContext';
 
 function ProductosDestacados() {
   const { products, loading, error } = React.useContext(ProductsContext);
+  // Toma los primeros 3 productos como destacados para el home.
   const destacados = products.slice(0, 3);
 
   if (loading) {

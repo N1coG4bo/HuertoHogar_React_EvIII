@@ -4,6 +4,7 @@ import Sidebar from './sidebar';
 
 function MainLayout({ children }) {
   return (
+    // Layout base: sidebar fijo a la izquierda y contenido dinamico a la derecha.
     <div className="container-fluid main-content">
       <div className="row">
         <div className="col-12 col-lg-3 col-xl-2 mb-4">

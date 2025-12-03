@@ -6,6 +6,7 @@ import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 
 function RegistroView() {
+  // Estado local del formulario y acceso al metodo register.
   const { register } = React.useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,6 +14,7 @@ function RegistroView() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Crea el usuario y redirige al catalogo; muestra error si falla.
   const handleSubmit = (e) => {
     e.preventDefault();
     try {

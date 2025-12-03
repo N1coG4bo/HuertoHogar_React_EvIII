@@ -5,6 +5,7 @@ import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 
+// Obtiene iniciales a partir del nombre completo.
 function getInitials(name = '') {
   const parts = name.split(' ').filter(Boolean);
   const [a = '', b = ''] = parts;
@@ -12,9 +13,11 @@ function getInitials(name = '') {
 }
 
 function AdminUsuarioDetalleView() {
+  // Contexto: email de la URL, listado de usuarios y el usuario autenticado.
   const { email } = useParams();
   const { users, isAdmin, user: currentUser } = React.useContext(AuthContext);
 
+  // Busca al usuario objetivo por email.
   const user = users.find((u) => u.email === email);
 
   if (!isAdmin) {
@@ -44,6 +47,7 @@ function AdminUsuarioDetalleView() {
     );
   }
 
+  // Fallbacks de informacion basica si faltan datos.
   const about = user.about || (user.role === 'admin' ? 'Gestiona la plataforma' : 'Cliente HuertoHogar');
   const address = user.address || 'Direccion no registrada';
   const phone = user.phone || '+56 9 0000 0000';

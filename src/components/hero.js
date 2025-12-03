@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
+    // Hero principal con mensaje y CTA hacia el catalogo.
     <header className="bg-success py-5 mb-5">
       <div className="container text-center">
         <div className="text-white">

@@ -5,6 +5,7 @@ import Footer from '../footer';
 import { CartContext } from '../../context/CartContext';
 
 function CarritoView() {
+  // Acceso al carrito: items, totales y acciones CRUD.
   const { items, totalItems, totalPrecio, updateQty, removeItem, clearCart } = React.useContext(CartContext);
 
   return (

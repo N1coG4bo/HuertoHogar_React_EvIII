@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductoCard from './producto_card';
 import { ProductsContext } from '../context/ProductsContext';
 
+// Catologo de categorias con el texto mostrado y el prefijo que usa cada codigo de producto.
 const CATEGORIAS = {
   frutas: { label: 'Frutas Frescas', prefix: 'FR' },
   verduras: { label: 'Verduras Organicas', prefix: 'VR' },
@@ -12,6 +13,7 @@ const CATEGORIAS = {
 };
 
 function Catalogo() {
+  // Estado local de filtros y utilidades de ruta/contexto.
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('');
   const [orden, setOrden] = useState('');
@@ -19,7 +21,7 @@ function Catalogo() {
   const navigate = useNavigate();
   const { products, loading, error } = React.useContext(ProductsContext);
 
-  // Leer query params para sincronizar categoria/vista con el sidebar
+  // Al cambiar la URL, sincroniza la categoria desde el query param `cat`.
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const catParam = params.get('cat');
@@ -30,10 +32,12 @@ function Catalogo() {
     }
   }, [location.search]);
 
+  // Deriva la lista filtrada y ordenada; se recalcula solo cuando cambian dependencias.
   const productosFiltrados = useMemo(() => {
     const params = new URLSearchParams(location.search);
     const view = params.get('view');
 
+    // Vista especial: destacados u ofertas limitan el conjunto base.
     let base = products;
     if (view === 'destacados') {
       base = products.slice(0, 3);
@@ -65,6 +69,7 @@ function Catalogo() {
     });
   }, [busqueda, categoria, orden, location.search, products]);
 
+  // Al elegir categoria, actualiza el estado y persiste el filtro en la URL.
   const handleCategoria = (value) => {
     setCategoria(value);
     const params = new URLSearchParams(location.search);

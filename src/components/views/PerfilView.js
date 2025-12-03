@@ -5,6 +5,7 @@ import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 
+// Obtiene iniciales a partir del nombre completo.
 function getInitials(name = '') {
   const parts = name.split(' ').filter(Boolean);
   const [a = '', b = ''] = parts;
@@ -12,6 +13,7 @@ function getInitials(name = '') {
 }
 
 function PerfilView() {
+  // Contexto de usuario, listado y accion para actualizar perfil.
   const { user, users, updateProfile } = React.useContext(AuthContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -24,11 +26,13 @@ function PerfilView() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  // Encuentra la version mas completa del usuario autenticado.
   const fullUser = useMemo(() => {
     if (!user) return null;
     return users.find((u) => u.email === user.email) || { ...user };
   }, [user, users]);
 
+  // Precarga valores del formulario cuando hay datos.
   useEffect(() => {
     if (!fullUser) return;
     setForm({
@@ -54,11 +58,13 @@ function PerfilView() {
     );
   }
 
+  // Actualiza el campo editado en el formulario local.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Procesa el guardado con trim y feedback de exito/error.
   const handleSubmit = (e) => {
     e.preventDefault();
     try {

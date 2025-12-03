@@ -1,6 +1,6 @@
 // Menú lateral con accesos directos a las secciones.
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 
@@ -9,22 +9,31 @@ function classNames(...values) {
 }
 
 function Sidebar() {
-  const { isAdmin } = React.useContext(AuthContext);
+  const { user, isAdmin, logout } = React.useContext(AuthContext);
   const { totalItems } = React.useContext(CartContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const view = params.get('view') || '';
 
+  // Detecta la pagina activa para resaltar el item correspondiente.
   const page = React.useMemo(() => {
     if (location.pathname === '/') return 'inicio';
     if (location.pathname === '/blog') return 'blog';
     if (location.pathname.startsWith('/productos')) return 'catalogo';
     if (location.pathname.startsWith('/carrito')) return 'carrito';
     if (location.pathname.startsWith('/perfil')) return 'perfil';
+    if (location.pathname.startsWith('/login')) return 'login';
+    if (location.pathname.startsWith('/registro')) return 'registro';
     if (location.pathname.startsWith('/admin/dashboard')) return 'admin-dashboard';
     if (location.pathname.startsWith('/admin/usuarios')) return 'admin';
     return '';
   }, [location.pathname]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <aside className="app-sidebar shadow-sm" data-bs-theme="light">
@@ -96,17 +105,43 @@ function Sidebar() {
                 <i className="nav-icon fas fa-shopping-cart"></i>
                 <p>
                   Carrito
+                  {/* Badge de cantidad solo si el carrito tiene items */}
                   {totalItems > 0 && <span className="badge bg-success ms-2">{totalItems}</span>}
                 </p>
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link to="/perfil" className={classNames('nav-link', page === 'perfil' && 'active')}>
-                <i className="nav-icon fas fa-user"></i>
-                <p>Mi perfil</p>
-              </Link>
-            </li>
+            {user ? (
+              <>
+                <li className="nav-item">
+                  <Link to="/perfil" className={classNames('nav-link', page === 'perfil' && 'active')}>
+                    <i className="nav-icon fas fa-user"></i>
+                    <p>Mi perfil</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <button type="button" className="nav-link btn text-start w-100" onClick={handleLogout}>
+                    <i className="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Salir</p>
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link to="/login" className={classNames('nav-link', page === 'login' && 'active')}>
+                    <i className="nav-icon fas fa-sign-in-alt"></i>
+                    <p>Iniciar sesion</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/registro" className={classNames('nav-link', page === 'registro' && 'active')}>
+                    <i className="nav-icon fas fa-user-plus"></i>
+                    <p>Registrate</p>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {isAdmin && (
               <>

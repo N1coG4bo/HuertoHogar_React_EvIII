@@ -5,6 +5,7 @@ import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 
+// Obtiene iniciales para usar en el avatar circular.
 function getInitials(name = '') {
   const parts = name.split(' ').filter(Boolean);
   const [a = '', b = ''] = parts;
@@ -14,6 +15,7 @@ function getInitials(name = '') {
 function AdminUsuariosView() {
   const { users, isAdmin } = React.useContext(AuthContext);
 
+  // Normaliza tarjetas con datos de fallback para cada usuario.
   const cards = users.map((u) => ({
     ...u,
     title: u.role === 'admin' ? 'Administrador' : 'Cliente',
