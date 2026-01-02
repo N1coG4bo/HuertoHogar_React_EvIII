@@ -7,7 +7,7 @@ function Footer() {
       <div className="container text-center">
         {/* Muestra el año actual dinamicamente y el texto legal */}
         <small className="text-muted">
-          (c) {new Date().getFullYear()} HuertoHogar. Todos los derechos reservados.
+          (c) {new Date().getFullYear()} Red Privada. Todos los derechos reservados.
         </small>
       </div>
     </footer>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import PixelTransition from './pixel_transition';
 
 function ProductoCard({ producto }) {
   // Deriva flags/acciones: sin stock y acceso al carrito global.
@@ -20,13 +21,24 @@ function ProductoCard({ producto }) {
   return (
     <div className="col-12 col-sm-6 col-lg-4 mb-4">
       <div className="card h-100 shadow-sm">
-        <img
-          src={producto.img}
-          className="card-img-top"
-          alt={producto.nombre}
-          loading="lazy"
-          onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
-          style={{ height: '200px', objectFit: 'cover' }}
+        <PixelTransition
+          className="product-image-transition card-img-top"
+          aspectRatio="66%"
+          gridSize={7}
+          pixelColor="#f1d18b"
+          animationStepDuration={0.35}
+          once
+          autoPlay
+          firstContent={<div className="pixel-image-placeholder" />}
+          secondContent={(
+            <img
+              src={producto.img}
+              className="product-image-frame"
+              alt={producto.nombre}
+              loading="lazy"
+              onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
+            />
+          )}
         />
 
         <div className="card-body d-flex flex-column">

@@ -5,9 +5,24 @@ import Footer from '../footer';
 
 // Posts estaticos de ejemplo para el blog.
 const POSTS = [
-  { id: 1, title: '5 recetas rapidas con verduras organicas', excerpt: 'Ideas para cenar en 20 minutos usando productos frescos.', date: '2025-12-01' },
-  { id: 2, title: 'Como elegir frutas de estacion', excerpt: 'Tips para identificar frutas en su punto y aprovechar precios.', date: '2025-11-21' },
-  { id: 3, title: 'Por que comprar local', excerpt: 'Impacto en la comunidad y la huella de carbono al preferir productores cercanos.', date: '2025-11-10' },
+  {
+    id: 1,
+    title: 'Empaques discretos: como cuidamos tu privacidad',
+    excerpt: 'Nuestro proceso de embalaje neutro y seguimiento seguro de pedidos.',
+    date: '2025-12-01',
+  },
+  {
+    id: 2,
+    title: 'Como seleccionamos productos de calidad',
+    excerpt: 'Curacion, pruebas internas y proveedores verificados.',
+    date: '2025-11-21',
+  },
+  {
+    id: 3,
+    title: 'Envios rapidos y discretos en todo Chile',
+    excerpt: 'Plazos, zonas de cobertura y opciones de retiro seguro.',
+    date: '2025-11-10',
+  },
 ];
 
 function BlogView() {
@@ -15,7 +30,7 @@ function BlogView() {
     <>
       <MainLayout>
         <div className="my-4">
-          <h1 className="h3 text-success fw-bold mb-4">Blog HuertoHogar</h1>
+          <h1 className="h3 text-success fw-bold mb-4">Blog Red Privada</h1>
           <div className="row g-4">
             {POSTS.map((post) => (
               <div className="col-12 col-md-6 col-lg-4" key={post.id}>

@@ -1,4 +1,5 @@
-/* Estilos base de HuertoHogar */
+/* Estilos base de Red Privada */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap');
 .glass-panel {
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -8,6 +9,138 @@
 
 .hero-gradient {
   background: linear-gradient(135deg, #1f7a38 0%, #3ca15a 50%, #9dd167 100%);
+}
+
+.hero-ascii {
+  min-height: 420px;
+}
+
+.hero-ascii-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-ascii .container {
+  position: relative;
+  z-index: 2;
+}
+
+.global-parallax {
+  position: fixed;
+  inset: -10vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.global-parallax img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  display: block;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ascii-text-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ascii-text-container canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.ascii-text-container pre {
+  margin: 0;
+  user-select: none;
+  padding: 0;
+  line-height: 1em;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: radial-gradient(circle, #ffe28a 0%, #ffd166 50%, #ff9f1c 100%);
+  background-attachment: fixed;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  z-index: 9;
+  mix-blend-mode: difference;
+}
+
+.pixelated-image-card {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: #f7f4ee;
+}
+
+.pixelated-image-card__default,
+.pixelated-image-card__active,
+.pixelated-image-card__pixels {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.pixelated-image-card__active {
+  z-index: 2;
+  display: none;
+}
+
+.pixelated-image-card__pixels {
+  pointer-events: none;
+  z-index: 3;
+}
+
+.pixelated-image-card__pixel {
+  display: none;
+  position: absolute;
+}
+
+.pixel-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, #ffe7b3, #f5d18f 45%, #d8b26f 100%);
+}
+
+.product-image-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-image-transition {
+  border-radius: 12px 12px 0 0;
+}
+
+.product-image-transition:focus-visible {
+  outline: 2px solid #1f7a38;
+  outline-offset: 2px;
 }
 
 .btn-success {

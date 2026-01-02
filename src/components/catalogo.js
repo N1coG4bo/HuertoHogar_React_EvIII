@@ -6,10 +6,10 @@ import { ProductsContext } from '../context/ProductsContext';
 
 // Catologo de categorias con el texto mostrado y el prefijo que usa cada codigo de producto.
 const CATEGORIAS = {
-  frutas: { label: 'Frutas Frescas', prefix: 'FR' },
-  verduras: { label: 'Verduras Organicas', prefix: 'VR' },
-  organicos: { label: 'Productos Organicos', prefix: 'PO' },
-  lacteos: { label: 'Productos Lacteos', prefix: 'PL' },
+  frutas: { label: 'Bienestar', key: 'bienestar', prefix: 'FR' },
+  verduras: { label: 'Cuidado Personal', key: 'cuidado', prefix: 'VR' },
+  organicos: { label: 'Tecnologia', key: 'tecnologia', prefix: 'PO' },
+  lacteos: { label: 'Accesorios', key: 'accesorios', prefix: 'PL' },
 };
 
 function Catalogo() {
@@ -54,7 +54,13 @@ function Catalogo() {
       let matchCat = true;
       if (categoria) {
         const entry = Object.values(CATEGORIAS).find((c) => c.label === categoria);
-        if (entry) matchCat = p.code.startsWith(entry.prefix);
+        if (entry) {
+          if (p.categoria) {
+            matchCat = p.categoria.toLowerCase() === entry.key;
+          } else {
+            matchCat = p.code.startsWith(entry.prefix);
+          }
+        }
       }
 
       return matchSearch && matchCat;
@@ -107,7 +113,7 @@ function Catalogo() {
             id="q"
             type="search"
             className="form-control"
-            placeholder="Ej: manzana..."
+            placeholder="Ej: kit bienestar..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
           />

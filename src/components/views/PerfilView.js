@@ -18,9 +18,7 @@ function PerfilView() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
-    about: '',
-    phone: '',
-    address: '',
+    rut: '',
     password: '',
   });
   const [message, setMessage] = useState('');
@@ -37,9 +35,7 @@ function PerfilView() {
     if (!fullUser) return;
     setForm({
       name: fullUser.name || '',
-      about: fullUser.about || '',
-      phone: fullUser.phone || '',
-      address: fullUser.address || '',
+      rut: fullUser.rut || '',
       password: '',
     });
   }, [fullUser]);
@@ -65,14 +61,12 @@ function PerfilView() {
   };
 
   // Procesa el guardado con trim y feedback de exito/error.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      updateProfile({
+      await updateProfile({
         name: form.name.trim() || user.name,
-        about: form.about.trim(),
-        phone: form.phone.trim(),
-        address: form.address.trim(),
+        rut: form.rut.trim(),
         password: form.password.trim() || undefined,
       });
       setMessage('Perfil actualizado');
@@ -108,7 +102,7 @@ function PerfilView() {
                   {getInitials(fullUser?.name || fullUser?.email)}
                 </div>
                 <h5 className="mb-1">{fullUser?.name}</h5>
-                <p className="text-muted mb-3">{fullUser?.about || 'Completa tu bio'}</p>
+                <p className="text-muted mb-3">{fullUser?.rut || 'RUT no registrado'}</p>
                 <div className="d-grid gap-2">
                   <button className="btn btn-success" type="button" disabled>Seguir</button>
                   <button className="btn btn-outline-primary" type="button" disabled>Mensaje</button>
@@ -120,12 +114,8 @@ function PerfilView() {
                   <div>{fullUser?.email}</div>
                 </div>
                 <div className="list-group-item">
-                  <strong>Telefono:</strong>
-                  <div>{fullUser?.phone || 'No registrado'}</div>
-                </div>
-                <div className="list-group-item">
-                  <strong>Direccion:</strong>
-                  <div>{fullUser?.address || 'No registrada'}</div>
+                  <strong>RUT:</strong>
+                  <div>{fullUser?.rut || 'No registrado'}</div>
                 </div>
               </div>
             </div>
@@ -147,40 +137,15 @@ function PerfilView() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Sobre ti</label>
-                <textarea
-                  name="about"
+                <label className="form-label">RUT</label>
+                <input
+                  name="rut"
+                  type="text"
                   className="form-control"
-                  rows="3"
-                  value={form.about}
+                  value={form.rut}
                   onChange={handleChange}
-                  placeholder="Bio corta"
+                  placeholder="12.345.678-9"
                 />
-              </div>
-
-              <div className="row g-3">
-                <div className="col-12 col-md-6">
-                  <label className="form-label">Telefono</label>
-                  <input
-                    name="phone"
-                    type="text"
-                    className="form-control"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="+56 9 ..."
-                  />
-                </div>
-                <div className="col-12 col-md-6">
-                  <label className="form-label">Direccion</label>
-                  <input
-                    name="address"
-                    type="text"
-                    className="form-control"
-                    value={form.address}
-                    onChange={handleChange}
-                    placeholder="Ciudad, calle..."
-                  />
-                </div>
               </div>
 
               <div className="mb-3 mt-3">

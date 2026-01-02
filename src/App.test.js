@@ -4,5 +4,5 @@ import App from './App';
 
 test('muestra el hero en la pagina de inicio', () => {
   render(<App />);
-  expect(screen.getByText(/Frescura del campo a tu mesa/i)).toBeInTheDocument();
+  expect(screen.getByText(/Red Privada: e-commerce discreto/i)).toBeInTheDocument();
 });

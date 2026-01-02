@@ -157,20 +157,27 @@ function AdminDashboardView() {
     if (!products.length) return [];
     const totals = products.reduce(
       (acc, p) => {
-        const prefix = p.code.substring(0, 2);
-        if (prefix === 'FR') acc.frutas += 1;
-        else if (prefix === 'VR') acc.verduras += 1;
-        else if (prefix === 'PO') acc.organicos += 1;
-        else if (prefix === 'PL') acc.lacteos += 1;
+        if (p.categoria) {
+          if (p.categoria.toLowerCase() === 'bienestar') acc.bienestar += 1;
+          else if (p.categoria.toLowerCase() === 'cuidado') acc.cuidado += 1;
+          else if (p.categoria.toLowerCase() === 'tecnologia') acc.tecnologia += 1;
+          else if (p.categoria.toLowerCase() === 'accesorios') acc.accesorios += 1;
+        } else {
+          const prefix = p.code.substring(0, 2);
+          if (prefix === 'FR') acc.bienestar += 1;
+          else if (prefix === 'VR') acc.cuidado += 1;
+          else if (prefix === 'PO') acc.tecnologia += 1;
+          else if (prefix === 'PL') acc.accesorios += 1;
+        }
         return acc;
       },
-      { frutas: 0, verduras: 0, organicos: 0, lacteos: 0 }
+      { bienestar: 0, cuidado: 0, tecnologia: 0, accesorios: 0 }
     );
     return [
-      { label: 'Frutas', valor: totals.frutas, color: '#0dcaf0' },
-      { label: 'Verduras', valor: totals.verduras, color: '#20c997' },
-      { label: 'Organicos', valor: totals.organicos, color: '#ffc107' },
-      { label: 'Lacteos', valor: totals.lacteos, color: '#dc3545' },
+      { label: 'Bienestar', valor: totals.bienestar, color: '#0dcaf0' },
+      { label: 'Cuidado Personal', valor: totals.cuidado, color: '#20c997' },
+      { label: 'Tecnologia', valor: totals.tecnologia, color: '#ffc107' },
+      { label: 'Accesorios', valor: totals.accesorios, color: '#dc3545' },
     ].filter((d) => d.valor > 0);
   }, [products]);
 

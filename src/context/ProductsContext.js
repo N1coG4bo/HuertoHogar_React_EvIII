@@ -22,11 +22,13 @@ export function ProductsProvider({ children }) {
     setError(null);
     try {
       const { data } = await productsService.list();
-      setProducts(Array.isArray(data) ? data : []);
+      const rawList = Array.isArray(data) ? data : data?.productos || [];
+      setProducts(rawList.map(productsService.normalizeProduct).filter(Boolean));
     } catch (remoteErr) {
       try {
         const { data } = await api.get('/data/productos.json');
-        setProducts(Array.isArray(data) ? data : []);
+        const rawList = Array.isArray(data) ? data : [];
+        setProducts(rawList.map(productsService.normalizeProduct).filter(Boolean));
       } catch (localErr) {
         const message =
           localErr?.response?.data?.message || localErr?.message || remoteErr?.message || 'Error al cargar productos';

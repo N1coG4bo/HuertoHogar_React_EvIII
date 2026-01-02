@@ -15,10 +15,10 @@ function RegistroView() {
   const navigate = useNavigate();
 
   // Crea el usuario y redirige al catalogo; muestra error si falla.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      register({ email: email.trim(), password, name: name.trim() || 'Usuario' });
+      await register({ email: email.trim(), password, name: name.trim() || 'Usuario' });
       navigate('/productos');
     } catch (err) {
       setError(err.message);

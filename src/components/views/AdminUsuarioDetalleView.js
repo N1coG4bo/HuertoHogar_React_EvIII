@@ -48,9 +48,8 @@ function AdminUsuarioDetalleView() {
   }
 
   // Fallbacks de informacion basica si faltan datos.
-  const about = user.about || (user.role === 'admin' ? 'Gestiona la plataforma' : 'Cliente HuertoHogar');
-  const address = user.address || 'Direccion no registrada';
-  const phone = user.phone || '+56 9 0000 0000';
+  const about = user.about || (user.role === 'admin' ? 'Gestiona la plataforma' : 'Cliente Red Privada');
+  const rut = user.rut || 'RUT no registrado';
 
   return (
     <>
@@ -81,7 +80,7 @@ function AdminUsuarioDetalleView() {
                   {getInitials(user.name || user.email)}
                 </div>
                 <h5 className="mb-1">{user.name}</h5>
-                <p className="text-muted mb-3">{about}</p>
+                <p className="text-muted mb-3">{rut}</p>
                 <div className="d-grid gap-2">
                   <button className="btn btn-success" type="button" disabled>Seguir</button>
                   <button className="btn btn-outline-primary" type="button" disabled>Mensaje</button>
@@ -93,12 +92,8 @@ function AdminUsuarioDetalleView() {
                   <div>{user.email}</div>
                 </div>
                 <div className="list-group-item">
-                  <strong>Telefono:</strong>
-                  <div>{phone}</div>
-                </div>
-                <div className="list-group-item">
-                  <strong>Direccion:</strong>
-                  <div>{address}</div>
+                  <strong>RUT:</strong>
+                  <div>{rut}</div>
                 </div>
               </div>
             </div>

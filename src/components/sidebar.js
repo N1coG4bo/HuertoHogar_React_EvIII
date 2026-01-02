@@ -22,6 +22,9 @@ function Sidebar() {
     if (location.pathname === '/blog') return 'blog';
     if (location.pathname.startsWith('/productos')) return 'catalogo';
     if (location.pathname.startsWith('/carrito')) return 'carrito';
+    if (location.pathname.startsWith('/pedidos')) return 'pedidos';
+    if (location.pathname.startsWith('/comunidad')) return 'comunidad';
+    if (location.pathname.startsWith('/mensajes')) return 'mensajes';
     if (location.pathname.startsWith('/perfil')) return 'perfil';
     if (location.pathname.startsWith('/login')) return 'login';
     if (location.pathname.startsWith('/registro')) return 'registro';
@@ -45,7 +48,7 @@ function Sidebar() {
           >
             HH
           </span>
-          <span className="brand-text fw-light">HuertoHogar</span>
+          <span className="brand-text fw-light">Red Privada</span>
         </Link>
       </div>
 
@@ -108,6 +111,27 @@ function Sidebar() {
                   {/* Badge de cantidad solo si el carrito tiene items */}
                   {totalItems > 0 && <span className="badge bg-success ms-2">{totalItems}</span>}
                 </p>
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/pedidos" className={classNames('nav-link', page === 'pedidos' && 'active')}>
+                <i className="nav-icon fas fa-receipt"></i>
+                <p>Pedidos</p>
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/comunidad" className={classNames('nav-link', page === 'comunidad' && 'active')}>
+                <i className="nav-icon fas fa-user-friends"></i>
+                <p>Comunidad</p>
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/mensajes" className={classNames('nav-link', page === 'mensajes' && 'active')}>
+                <i className="nav-icon fas fa-envelope"></i>
+                <p>Mensajes</p>
               </Link>
             </li>
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ProductoCard from './producto_card';
+import PixelTransition from './pixel_transition';
 import { CartContext } from '../context/CartContext';
 import { ProductsContext } from '../context/ProductsContext';
 
@@ -60,13 +61,24 @@ function DetalleContenido() {
     <div className="container my-5">
       <div className="row g-4 align-items-start">
         <div className="col-12 col-lg-6">
-          <div className="ratio ratio-4x3 bg-white border rounded overflow-hidden">
-            <img
-              src={producto.img}
-              alt={producto.nombre}
-              className="w-100 h-100"
-              style={{ objectFit: 'cover' }}
-              onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
+          <div className="border rounded overflow-hidden">
+            <PixelTransition
+              className="product-image-transition"
+              aspectRatio="75%"
+              gridSize={9}
+              pixelColor="#f1d18b"
+              animationStepDuration={0.4}
+              once
+              autoPlay
+              firstContent={<div className="pixel-image-placeholder" />}
+              secondContent={(
+                <img
+                  src={producto.img}
+                  alt={producto.nombre}
+                  className="product-image-frame"
+                  onError={(e) => { e.target.onerror = null; e.target.src = '/img-placeholder.svg'; }}
+                />
+              )}
             />
           </div>
         </div>

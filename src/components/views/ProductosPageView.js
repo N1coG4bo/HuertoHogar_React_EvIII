@@ -11,7 +11,7 @@ function ProductosPageView() {
       <MainLayout>
         <PageHeader
           titulo="Catalogo de productos"
-          bajada="Explora nuestras frutas, verduras y productos organicos."
+          bajada="Seleccion premium con distribucion discreta y envio seguro."
         />
         <Catalogo />
       </MainLayout>

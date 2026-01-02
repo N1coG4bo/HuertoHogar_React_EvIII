@@ -19,9 +19,7 @@ function AdminUsuariosView() {
   const cards = users.map((u) => ({
     ...u,
     title: u.role === 'admin' ? 'Administrador' : 'Cliente',
-    about: u.about || (u.role === 'admin' ? 'Gestiona la plataforma' : 'Cliente HuertoHogar'),
-    address: u.address || 'Direccion no registrada',
-    phone: u.phone || '+56 9 0000 0000',
+    rut: u.rut || 'RUT no registrado',
   }));
 
   return (
@@ -49,15 +47,7 @@ function AdminUsuariosView() {
                     <div className="flex-grow-1">
                       <p className="text-muted mb-1">{u.title}</p>
                       <h5 className="mb-1">{u.name}</h5>
-                      <p className="mb-1"><strong>About:</strong> {u.about}</p>
-                      <p className="mb-1 text-muted" style={{ fontSize: '0.9rem' }}>
-                        <i className="fas fa-map-marker-alt me-2 text-secondary" />
-                        {u.address}
-                      </p>
-                      <p className="mb-2 text-muted" style={{ fontSize: '0.9rem' }}>
-                        <i className="fas fa-phone-alt me-2 text-secondary" />
-                        {u.phone}
-                      </p>
+                      <p className="mb-1"><strong>RUT:</strong> {u.rut}</p>
                       <div className="d-flex gap-2">
                         <button className="btn btn-success btn-sm" type="button" disabled>
                           <i className="fas fa-comments me-1" /> Chat

@@ -1,102 +1,135 @@
 // Contexto para autenticación y gestión básica de usuarios.
-import React, { createContext, useEffect, useMemo, useState } from 'react';
-
-const USERS_KEY = 'hh_users';
-const SESSION_KEY = 'hh_user';
+import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { authService } from '../services/authService';
+import {
+  getAccessToken,
+  getStoredUser,
+  setStoredUser,
+  clearStoredUser,
+  setTokens,
+  clearTokens,
+} from '../services/authStorage';
 
 export const AuthContext = createContext();
 
-const DEFAULT_ADMIN = {
-  email: 'admin@huertohogar.com',
-  password: 'admin123',
-  name: 'Admin',
-  role: 'admin',
-};
+function getErrorMessage(err, fallback) {
+  return err?.response?.data?.error || err?.message || fallback;
+}
 
 export function AuthProvider({ children }) {
-  // Usuarios persistidos en localStorage (semilla incluye admin).
-  const [users, setUsers] = useState(() => {
-    const saved = localStorage.getItem(USERS_KEY);
-    if (saved) return JSON.parse(saved);
-    return [DEFAULT_ADMIN];
-  });
+  const [user, setUser] = useState(() => getStoredUser());
+  const [users, setUsers] = useState([]);
+  const [bootstrapped, setBootstrapped] = useState(false);
 
-  // Sesion actual guardada en localStorage.
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem(SESSION_KEY);
-    return saved ? JSON.parse(saved) : null;
-  });
+  const isAdmin = user?.role === 'admin' || user?.role === 'root';
 
   useEffect(() => {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }, [users]);
+    let active = true;
+    async function bootstrap() {
+      const token = getAccessToken();
+      if (!token) {
+        if (active) setBootstrapped(true);
+        return;
+      }
+      try {
+        const { data } = await authService.getProfile();
+        if (!active) return;
+        setUser(data.user);
+        setStoredUser(data.user);
+      } catch (err) {
+        if (!active) return;
+        clearTokens();
+        clearStoredUser();
+        setUser(null);
+      } finally {
+        if (active) setBootstrapped(true);
+      }
+    }
+    bootstrap();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
-    if (user) localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-    else localStorage.removeItem(SESSION_KEY);
+    let active = true;
+    async function loadUsers() {
+      if (!isAdmin) {
+        setUsers([]);
+        return;
+      }
+      try {
+        const { data } = await authService.listUsers();
+        if (active) setUsers(data.users || []);
+      } catch (err) {
+        if (active) setUsers([]);
+      }
+    }
+    loadUsers();
+    return () => {
+      active = false;
+    };
+  }, [isAdmin]);
+
+  const login = useCallback(async (email, password) => {
+    try {
+      const { data } = await authService.login(email, password);
+      setTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+      setUser(data.user);
+      setStoredUser(data.user);
+      return data.user;
+    } catch (err) {
+      throw new Error(getErrorMessage(err, 'Credenciales invalidas'));
+    }
+  }, []);
+
+  const register = useCallback(async ({ email, password, name, rut }) => {
+    try {
+      const { data } = await authService.register({ email, password, name, rut });
+      setTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+      setUser(data.user);
+      setStoredUser(data.user);
+      return data.user;
+    } catch (err) {
+      throw new Error(getErrorMessage(err, 'No pudimos crear tu cuenta'));
+    }
+  }, []);
+
+  const updateProfile = useCallback(async (updates) => {
+    if (!user) return;
+    const payload = {};
+    if (updates.name) payload.name = updates.name;
+    if (updates.rut) payload.rut = updates.rut;
+    if (Object.keys(payload).length > 0) {
+      await authService.updateUser(user.email, payload);
+    }
+    if (updates.password) {
+      await authService.resetPassword(user.email, updates.password);
+    }
+    const updatedUser = { ...user, ...payload };
+    setUser(updatedUser);
+    setStoredUser(updatedUser);
   }, [user]);
 
-  const isAdmin = user?.role === 'admin';
-
-  // Inicia sesion validando credenciales.
-  function login(email, password) {
-    const found = users.find((u) => u.email === email && u.password === password);
-    if (!found) throw new Error('Credenciales invalidas');
-    setUser({ email: found.email, name: found.name, role: found.role });
-  }
-
-  // Registra un nuevo usuario basico.
-  function register({ email, password, name }) {
-    if (users.some((u) => u.email === email)) {
-      throw new Error('El correo ya esta registrado');
-    }
-    const newUser = { email, password, name, role: 'user' };
-    setUsers((prev) => [...prev, newUser]);
-    setUser({ email, name, role: 'user' });
-  }
-
-  // Actualiza datos del usuario en lista y en sesion.
-  function updateProfile(updates) {
-    if (!user) return;
-    setUsers((prev) =>
-      prev.map((u) => {
-        if (u.email !== user.email) return u;
-        const next = { ...u };
-        if (updates.name) next.name = updates.name;
-        if (typeof updates.about === 'string') next.about = updates.about;
-        if (typeof updates.phone === 'string') next.phone = updates.phone;
-        if (typeof updates.address === 'string') next.address = updates.address;
-        if (updates.password) next.password = updates.password;
-        return next;
-      })
-    );
-    setUser((prev) => ({
-      ...prev,
-      name: updates.name || prev?.name,
-      about: typeof updates.about === 'string' ? updates.about : prev?.about,
-      phone: typeof updates.phone === 'string' ? updates.phone : prev?.phone,
-      address: typeof updates.address === 'string' ? updates.address : prev?.address,
-      email: user.email,
-      role: user.role,
-    }));
-  }
-
-  // Cierra sesion.
-  function logout() {
+  const logout = useCallback(() => {
+    clearTokens();
+    clearStoredUser();
     setUser(null);
-  }
+    setUsers([]);
+  }, []);
 
   const value = useMemo(
     () => ({
       user,
       isAdmin,
       users,
+      bootstrapped,
       login,
       register,
       updateProfile,
       logout,
     }),
-    [user, isAdmin, users]
+    [user, isAdmin, users, bootstrapped, login, register, updateProfile, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -14,10 +14,10 @@ function LoginView() {
   const navigate = useNavigate();
 
   // Intenta autenticar y redirigir al catalogo; muestra error si falla.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      login(email.trim(), password);
+      await login(email.trim(), password);
       navigate('/productos');
     } catch (err) {
       setError(err.message);
