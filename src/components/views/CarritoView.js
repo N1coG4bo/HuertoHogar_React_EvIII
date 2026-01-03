@@ -6,10 +6,11 @@ import { CartContext } from '../../context/CartContext';
 import { ProductsContext } from '../../context/ProductsContext';
 import { AuthContext } from '../../context/AuthContext';
 import { pedidosService } from '../../services/pedidosService';
+import PageHeader from '../page_header';
 
 function CarritoView() {
   // Acceso al carrito: items, totales y acciones CRUD.
-  const { items, totalItems, totalPrecio, updateQty, removeItem, clearCart, loading, error } = React.useContext(CartContext);
+  const { items, totalItems, totalPrecio, totals, updateQty, removeItem, clearCart, loading, error } = React.useContext(CartContext);
   const { products } = React.useContext(ProductsContext);
   const { user } = React.useContext(AuthContext);
   const [checkoutError, setCheckoutError] = useState('');
@@ -28,7 +29,7 @@ function CarritoView() {
       precio: it.precio ?? product.precio ?? 0,
       unidad: it.unidad || product.unidad || 'unidad',
       img: it.img || product.img || '/img-placeholder.svg',
-      proveedorEmail: product.providerEmail || product.proveedorEmail || 'proveedor@redprivada.com',
+      proveedorEmail: it.providerEmail || product.providerEmail || product.proveedorEmail || 'proveedor@redprivada.com',
     };
   });
 
@@ -52,7 +53,9 @@ function CarritoView() {
         proveedorEmail,
         compradorNombre: user.name || user.email,
         detalleJson,
-        totalCLP: totalPrecio,
+        subtotalCLP: totals.subtotalCLP,
+        ivaCLP: totals.ivaCLP,
+        totalCLP: totals.totalCLP,
       };
       await pedidosService.create(payload);
       setCheckoutOk('Pedido creado. Revisalo en la seccion de pedidos.');
@@ -65,13 +68,15 @@ function CarritoView() {
   return (
     <>
       <MainLayout>
+        <PageHeader
+          titulo="Carrito"
+          actions={
+            normalizedItems.length > 0 ? (
+              <button className="btn btn-outline-light btn-sm" onClick={clearCart}>Vaciar</button>
+            ) : null
+          }
+        />
         <div className="my-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1 className="h4 text-success fw-bold mb-0">Carrito</h1>
-            {normalizedItems.length > 0 && (
-              <button className="btn btn-outline-danger btn-sm" onClick={clearCart}>Vaciar</button>
-            )}
-          </div>
 
           {loading && <div className="alert alert-info">Cargando carrito...</div>}
           {error && <div className="alert alert-danger">{error}</div>}
@@ -125,6 +130,8 @@ function CarritoView() {
                   <div className="card-body">
                     <h5 className="card-title">Resumen</h5>
                     <p className="mb-1">Productos: {totalItems}</p>
+                    <p className="mb-1">Subtotal: <strong>${totals.subtotalCLP.toLocaleString('es-CL')}</strong></p>
+                    <p className="mb-1">IVA (19%): <strong>${totals.ivaCLP.toLocaleString('es-CL')}</strong></p>
                     <p className="mb-3">Total: <strong>${totalPrecio.toLocaleString('es-CL')}</strong></p>
                     <button className="btn btn-success w-100" onClick={handleCheckout}>
                       Crear pedido

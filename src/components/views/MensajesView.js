@@ -1,9 +1,10 @@
 // Vista de mensajes e inbox.
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 import { messagesService } from '../../services/messagesService';
+import PageHeader from '../page_header';
 
 function MensajesView() {
   const { user } = React.useContext(AuthContext);
@@ -14,7 +15,7 @@ function MensajesView() {
   const [newTo, setNewTo] = useState('');
   const [error, setError] = useState('');
 
-  const refreshInbox = async () => {
+  const refreshInbox = useCallback(async () => {
     if (!user) return;
     setError('');
     try {
@@ -23,7 +24,7 @@ function MensajesView() {
     } catch (err) {
       setError(err?.response?.data?.error || 'No pudimos cargar el inbox.');
     }
-  };
+  }, [user]);
 
   const refreshThread = async (email) => {
     if (!email) return;
@@ -38,8 +39,23 @@ function MensajesView() {
   };
 
   useEffect(() => {
-    refreshInbox();
+    if (!user) return;
+    const unsubscribe = messagesService.listenInbox((nextInbox) => {
+      setInbox(nextInbox);
+    });
+    return () => unsubscribe();
   }, [user]);
+
+  useEffect(() => {
+    if (!user || !activeEmail) {
+      setThread([]);
+      return undefined;
+    }
+    const unsubscribe = messagesService.listenThread(activeEmail, (nextThread) => {
+      setThread(nextThread);
+    });
+    return () => unsubscribe();
+  }, [user, activeEmail]);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -72,6 +88,7 @@ function MensajesView() {
     return (
       <>
         <MainLayout>
+          <PageHeader titulo="Mensajes" />
           <div className="my-4">
             <div className="alert alert-warning">Inicia sesion para ver tus mensajes.</div>
           </div>
@@ -84,11 +101,11 @@ function MensajesView() {
   return (
     <>
       <MainLayout>
+        <PageHeader
+          titulo="Mensajes"
+          actions={<button className="btn btn-outline-light btn-sm" onClick={refreshInbox}>Actualizar</button>}
+        />
         <div className="my-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1 className="h4 text-success fw-bold mb-0">Mensajes</h1>
-            <button className="btn btn-outline-success btn-sm" onClick={refreshInbox}>Actualizar</button>
-          </div>
 
           {error && <div className="alert alert-danger">{error}</div>}
 
@@ -104,7 +121,7 @@ function MensajesView() {
                       <button
                         key={item.id}
                         className={`btn w-100 text-start mb-2 ${activeEmail === item.senderEmail ? 'btn-success' : 'btn-outline-success'}`}
-                        onClick={() => refreshThread(item.senderEmail)}
+                        onClick={() => setActiveEmail(item.senderEmail)}
                       >
                         <div className="fw-bold">{item.senderEmail}</div>
                         <small className="text-muted">{item.content}</small>

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import PixelTransition from './pixel_transition';
+import TiltedCard from './tilted_card';
 
 function ProductoCard({ producto }) {
   // Deriva flags/acciones: sin stock y acceso al carrito global.
@@ -20,7 +21,8 @@ function ProductoCard({ producto }) {
 
   return (
     <div className="col-12 col-sm-6 col-lg-4 mb-4">
-      <div className="card h-100 shadow-sm">
+      <TiltedCard>
+        <div className="card h-100 shadow-sm electric-border-card">
         <PixelTransition
           className="product-image-transition card-img-top"
           aspectRatio="66%"
@@ -69,7 +71,8 @@ function ProductoCard({ producto }) {
             </button>
           </div>
         </div>
-      </div>
+        </div>
+      </TiltedCard>
     </div>
   );
 }

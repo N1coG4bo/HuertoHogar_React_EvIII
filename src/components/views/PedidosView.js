@@ -4,6 +4,7 @@ import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 import { pedidosService } from '../../services/pedidosService';
+import PageHeader from '../page_header';
 
 function formatMoney(value) {
   return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(value);
@@ -49,7 +50,19 @@ function PedidosView() {
   };
 
   useEffect(() => {
-    refresh();
+    if (!user) return;
+    const unsubscribeMis = pedidosService.listenMis((nextMis) => {
+      setMisPedidos(nextMis);
+    });
+    const unsubscribeProveedor = isProveedor
+      ? pedidosService.listenProveedor((nextProv) => {
+        setProveedorPedidos(nextProv);
+      })
+      : () => {};
+    return () => {
+      unsubscribeMis();
+      unsubscribeProveedor();
+    };
   }, [user, isProveedor]);
 
   const pedidosActivos = tab === 'mis' ? misPedidos : proveedorPedidos;
@@ -63,7 +76,6 @@ function PedidosView() {
       if (action === 'camino') await pedidosService.marcarEnCamino(pedidoId);
       if (action === 'entregado') await pedidosService.marcarEntregado(pedidoId);
       if (action === 'cancelar') await pedidosService.cancelar(pedidoId, { motivo: 'Cancelado por usuario' });
-      await refresh();
     } catch (err) {
       setError(err?.response?.data?.error || 'No pudimos actualizar el pedido.');
     }
@@ -87,6 +99,7 @@ function PedidosView() {
     return (
       <>
         <MainLayout>
+          <PageHeader titulo="Pedidos" />
           <div className="my-4">
             <div className="alert alert-warning">Inicia sesion para ver tus pedidos.</div>
           </div>
@@ -99,11 +112,11 @@ function PedidosView() {
   return (
     <>
       <MainLayout>
+        <PageHeader
+          titulo="Pedidos"
+          actions={<button className="btn btn-outline-light btn-sm" onClick={refresh}>Actualizar</button>}
+        />
         <div className="my-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1 className="h4 text-success fw-bold mb-0">Pedidos</h1>
-            <button className="btn btn-outline-success btn-sm" onClick={refresh}>Actualizar</button>
-          </div>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {loading && <div className="alert alert-info">Cargando pedidos...</div>}

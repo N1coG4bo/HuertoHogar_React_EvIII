@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
+import PageHeader from '../page_header';
 
 // Obtiene iniciales a partir del nombre completo.
 function getInitials(name = '') {
@@ -54,20 +55,22 @@ function AdminUsuarioDetalleView() {
   return (
     <>
       <MainLayout>
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <Link to="/admin/usuarios" className="btn btn-link text-decoration-none px-0">
+        <PageHeader
+          titulo="Perfil de usuario"
+          eyebrow={
+            <Link to="/admin/usuarios" className="btn btn-link text-decoration-none px-0 text-white">
               ← Volver
             </Link>
-            <h1 className="h4 text-success fw-bold mb-0">Perfil de usuario</h1>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            {currentUser?.email === user.email && (
-              <Link to="/perfil" className="btn btn-outline-primary btn-sm">Editar mi perfil</Link>
-            )}
-            <span className="badge bg-light text-secondary text-uppercase">{user.role}</span>
-          </div>
-        </div>
+          }
+          actions={
+            <>
+              {currentUser?.email === user.email && (
+                <Link to="/perfil" className="btn btn-outline-light btn-sm">Editar mi perfil</Link>
+              )}
+              <span className="badge bg-light text-secondary text-uppercase">{user.role}</span>
+            </>
+          }
+        />
 
         <div className="row g-4">
           <div className="col-12 col-lg-4">

@@ -1,9 +1,10 @@
 // Vista basica de comunidad (amigos y solicitudes).
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
 import { socialService } from '../../services/socialService';
+import PageHeader from '../page_header';
 
 function ComunidadView() {
   const { user } = React.useContext(AuthContext);
@@ -14,7 +15,7 @@ function ComunidadView() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     if (!user) return;
     setError('');
     try {
@@ -29,10 +30,24 @@ function ComunidadView() {
     } catch (err) {
       setError(err?.response?.data?.error || 'No pudimos cargar la comunidad.');
     }
-  };
+  }, [user]);
 
   useEffect(() => {
-    refresh();
+    if (!user) return;
+    const unsubscribeIncoming = socialService.listenIncoming((nextIncoming) => {
+      setIncoming(nextIncoming);
+    });
+    const unsubscribeOutgoing = socialService.listenOutgoing((nextOutgoing) => {
+      setOutgoing(nextOutgoing);
+    });
+    const unsubscribeFriends = socialService.listenFriends((nextFriends) => {
+      setFriends(nextFriends);
+    });
+    return () => {
+      unsubscribeIncoming();
+      unsubscribeOutgoing();
+      unsubscribeFriends();
+    };
   }, [user]);
 
   const handleSend = async (e) => {
@@ -64,6 +79,7 @@ function ComunidadView() {
     return (
       <>
         <MainLayout>
+          <PageHeader titulo="Comunidad" />
           <div className="my-4">
             <div className="alert alert-warning">Inicia sesion para ver la comunidad.</div>
           </div>
@@ -76,11 +92,11 @@ function ComunidadView() {
   return (
     <>
       <MainLayout>
+        <PageHeader
+          titulo="Comunidad"
+          actions={<button className="btn btn-outline-light btn-sm" onClick={refresh}>Actualizar</button>}
+        />
         <div className="my-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1 className="h4 text-success fw-bold mb-0">Comunidad</h1>
-            <button className="btn btn-outline-success btn-sm" onClick={refresh}>Actualizar</button>
-          </div>
 
           {error && <div className="alert alert-danger">{error}</div>}
           {message && <div className="alert alert-success">{message}</div>}

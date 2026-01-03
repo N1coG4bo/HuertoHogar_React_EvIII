@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '../main_layout';
 import Footer from '../footer';
 import { AuthContext } from '../../context/AuthContext';
+import PageHeader from '../page_header';
 
 // Obtiene iniciales a partir del nombre completo.
 function getInitials(name = '') {
@@ -81,12 +82,14 @@ function PerfilView() {
   return (
     <>
       <MainLayout>
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <button className="btn btn-link text-decoration-none px-0" type="button" onClick={() => navigate(-1)}>
-            ← Volver
-          </button>
-          <h1 className="h4 text-success fw-bold mb-0">Editar perfil</h1>
-        </div>
+        <PageHeader
+          titulo="Editar perfil"
+          eyebrow={
+            <button className="btn btn-link text-decoration-none px-0 text-white" type="button" onClick={() => navigate(-1)}>
+              ← Volver
+            </button>
+          }
+        />
 
         {message && <div className="alert alert-success">{message}</div>}
         {error && <div className="alert alert-danger">{error}</div>}

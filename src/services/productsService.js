@@ -47,3 +47,5 @@ export const productsService = {
   remove: (id) => api.delete(`/products/${id}`),
   normalizeProduct,
 };
+// Normaliza la estructura de un producto.
+

@@ -30,18 +30,17 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const refreshToken = getRefreshToken();
-    if (!refreshToken) {
-      clearTokens();
-      clearStoredUser();
-      return Promise.reject(error);
-    }
-
     config._retry = true;
     try {
+      const refreshToken = getRefreshToken();
+      if (!refreshToken || !API_BASE_URL) {
+        return Promise.reject(error);
+      }
       const refreshResponse = await axios.post(`${API_BASE_URL}/auth/refresh`, { refreshToken });
       const { accessToken, refreshToken: nextRefresh } = refreshResponse.data || {};
-      if (!accessToken) throw new Error('Refresh failed');
+      if (!accessToken) {
+        return Promise.reject(error);
+      }
       setTokens({ accessToken, refreshToken: nextRefresh || refreshToken });
       config.headers.Authorization = `Bearer ${accessToken}`;
       return api(config);
