@@ -283,6 +283,54 @@
   color: #eafff0;
 }
 
+.gallery-section {
+  padding: 12px 8px;
+}
+
+.gallery-title {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+  color: #0b2a18;
+  font-weight: 800;
+}
+
+.gallery-subtitle {
+  margin: 0;
+  color: rgba(20, 100, 52, 0.7);
+}
+
+.gallery-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gallery-upload input[type='file'] {
+  color: #0b2a18;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.gallery-card {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(31, 122, 56, 0.2);
+  background: #0b1413;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
 .lightning-background {
   position: absolute;
   inset: -20% -10%;
